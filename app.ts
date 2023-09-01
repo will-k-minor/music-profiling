@@ -1,24 +1,24 @@
-import createError from "http-errors";
-import express, { NextFunction, Request, Response } from "express";
-import path from "path";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
+import createError from 'http-errors';
+import express, { NextFunction, Request, Response } from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
 
 const app = express();
 
 const port = 8000;
 
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use('/api/v1', indexRouter);
+app.use('/users', usersRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);

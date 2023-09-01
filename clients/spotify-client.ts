@@ -56,6 +56,21 @@ const authenticateWithSpotify = () => {
 
 authenticateWithSpotify();
 
+export const generateSpotifyAuthRedirect = (): string => {
+  //generate state
+  const scope =
+    'playlist-read-collaborative playlist-read-private user-top-read';
+
+  const queryString = new URLSearchParams({
+    client_id: spotifyClientId ?? 'client_id',
+    response_type: 'code',
+    redirect_uri: 'localhost:8000/api/v1/auth/spotify',
+    scope,
+  }).toString();
+
+  return 'https://accounts.spotify.com/authorize?' + queryString;
+};
+
 export const getMyPlaylists = () => {
   return spotifyClient
     .get(`/me/playlists`)

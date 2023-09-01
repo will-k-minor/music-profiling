@@ -6,12 +6,20 @@
 
 // SEARCH Spotify Playlists based on Search Term
 
-// GET Spotify Playlists that I like
-
 import { Request, Response, Router } from 'express';
-import { getArtist, getMyPlaylists } from '../clients/spotify-client';
+import {
+  generateSpotifyAuthRedirect,
+  getArtist,
+  getMyPlaylists,
+} from '../clients/spotify-client';
 
 const spotifyRouter: Router = Router();
+
+/** User Login to allow the App to tap into their data*/
+
+spotifyRouter.get('/login', (req: Request, res: Response) => {
+  return res.redirect(generateSpotifyAuthRedirect());
+});
 
 /* GET my playlists */
 /** Broken as UNAUTHORIZED.
